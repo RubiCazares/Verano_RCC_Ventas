@@ -46,13 +46,12 @@
 
     protected async override Task OnInitializedAsync()
     {
-        var responseHppt = await repository.Get<List<Country>>("api/countries");
-        Countries = responseHppt.Response!;
+        await LoadAsync();
     }
 
     private async Task LoadAsync()
     {
-        var responseHppt = await repository.Get<List<Country>> ("api/countries");
+        var responseHppt = await repository.Get<List<Country>> ("/api/countries");
         Countries = responseHppt.Response!;
     }
 
