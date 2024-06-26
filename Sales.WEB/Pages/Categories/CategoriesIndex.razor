@@ -1,40 +1,40 @@
 ﻿@using Sales.WEB.Repositories
 @using Sales.Shared.Entities
 
-@page "/countries"
-@inject IRepository repository 
+@page "/categories"
+@inject IRepository repository
 
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
 
-<h3>Países</h3>
+<h3>Categorías</h3>
 
-<a class="btn btn-primary" href="/countries/create"> Nuevo País</a>
+<a class="btn btn-primary" href="/categories/create"> Nueva categoría</a>
 
-<GenericList MyList="Countries">
+<GenericList MyList="Categories">
 
     <Body>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th></th>
-                    <th>País</th>
+                    <th>Categoría</th>
                 </tr>
             </thead>
             <tbody>
-    @foreach(var country in Countries!)
-    {
-        <tr>
-            <td>
-                <a class="btn btn-warning" href="/countries/edit/@country.Id">Editar</a>
-                <button class="btn btn-danger" @onclick=@(()=> DeleteAsync(country.Id))>Borrar</button>
-            </td>
-            <td>
-                @country.Name
-            </td>
-        </tr>
-    }
-        </tbody>
+                @foreach (var category in Categories!)
+                {
+                    <tr>
+                        <td>
+                            <a class="btn btn-warning" href="/categories/edit/@category.Id">Editar</a>
+                            <button class="btn btn-danger" @onclick=@(()=> DeleteAsync(category.Id))>Borrar</button>
+                        </td>
+                        <td>
+                            @category.Name
+                        </td>
+                    </tr>
+                }
+            </tbody>
         </table>
 
     </Body>
@@ -42,7 +42,7 @@
 </GenericList>
 
 @code {
-    public List<Country>? Countries { get; set;  }
+    public List<Category>? Categories { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
@@ -51,8 +51,8 @@
 
     private async Task LoadAsync()
     {
-        var responseHppt = await repository.Get<List<Country>> ("/api/countries");
-        Countries = responseHppt.Response!;
+        var responseHppt = await repository.Get<List<Category>>("/api/categories");
+        Categories = responseHppt.Response!;
     }
 
     private async Task DeleteAsync(int id)
@@ -72,7 +72,7 @@
         {
             return; //Deja salir al usuario sin guardar los cambios
         }
-        var responseHttp = await repository.Delete($"/api/countries/{id}");
+        var responseHttp = await repository.Delete($"/api/categories/{id}");
         if (responseHttp.Error)
         {
             if (responseHttp.HttpResponseMessage.StatusCode != HttpStatusCode.NotFound)

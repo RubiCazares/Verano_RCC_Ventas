@@ -14,7 +14,7 @@ builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=localhostCo
 builder.Services.AddTransient<SeedDb>();
 
 var app = builder.Build();
-//SeedData(app);
+SeedData(app);
 
 void SeedData(WebApplication app)
 {
